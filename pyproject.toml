@@ -1,0 +1,24 @@
+[project]
+name = "orno-meter-modbus-service"
+version = "0.1.0"
+description = "Read-only ORNO OR-WE-517 Modbus RTU to MQTT Discovery bridge"
+requires-python = ">=3.11"
+dependencies = [
+  "paho-mqtt>=2.1",
+  "pymodbus>=3.7,<4",
+  "pyserial>=3.5",
+  "PyYAML>=6.0",
+]
+
+[build-system]
+requires = ["hatchling>=1.25"]
+build-backend = "hatchling.build"
+
+[dependency-groups]
+dev = ["pytest>=8.0"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.hatch.build.targets.wheel]
+packages = ["orno_meter_service"]

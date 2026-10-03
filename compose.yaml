@@ -1,0 +1,19 @@
+services:
+  orno-meter-modbus-service:
+    build: .
+    restart: unless-stopped
+    network_mode: host
+    read_only: true
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    tmpfs:
+      - /tmp:rw,noexec,nosuid,size=16m
+    devices:
+      - /dev/serial/by-orno/heating-meter:/dev/orno-meter:rw
+    group_add:
+      - "${DIALOUT_GID:?Set DIALOUT_GID in .env}"
+    volumes:
+      - ./config/local.yaml:/config/local.yaml:ro
+    command: ["--config", "/config/local.yaml"]

@@ -1,0 +1,33 @@
+# Shared RS-485 transport. All meters are polled one at a time on this connection.
+modbus:
+  device: /dev/orno-meter
+  baudrate: 9600
+  bytesize: 8
+  parity: E
+  stopbits: 1
+  timeout_seconds: 2
+
+# Every meter must have a unique Modbus address, MQTT prefix, and HA identifier.
+meters:
+  - unit_id: 1
+    topic_prefix: orno/heating
+    device_identifier: orno_heating_meter
+    device_name: Elektroměr topení
+  # - unit_id: 2
+  #   topic_prefix: orno/workshop
+  #   device_identifier: orno_workshop_meter
+  #   device_name: Elektroměr dílna
+
+mqtt:
+  host: 127.0.0.1
+  port: 1883
+  discovery_prefix: homeassistant
+
+runtime:
+  poll_interval_seconds: 5
+  # Disabled by default. When enabled, each meter's clock is read, written, and
+  # read back while the same exclusive serial connection remains open.
+  clock_sync:
+    enabled: false
+    timezone: Europe/Prague
+    interval_seconds: 86400
